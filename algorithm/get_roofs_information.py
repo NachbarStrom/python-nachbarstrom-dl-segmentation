@@ -1,4 +1,5 @@
 from typing import Dict
+from algorithm.cnn import cnn
 
 
 def get_roofs_information(roof_locations: Dict) -> Dict:
@@ -10,11 +11,14 @@ def get_roofs_information(roof_locations: Dict) -> Dict:
     """
     validate_roof_locations(roof_locations)
 
-    return {
-        "data": [
-            {"roof size": "something", "more info": "yay"}
-        ]
-    }
+    roofProperties = {"data":[]}
+    for coord in roof_locations["data"]:
+        latCoord = float(coord["lat"])
+        lonCoord = float(coord["lon"])
+        (roofType, orientation, area) = cnn(latCoord, lonCoord)
+        roofProperties["data"].append({"roofType":roofType, "orientation":orientation, "area":area})
+
+    return roofProperties
 
 
 def validate_roof_locations(roof_locations: Dict) -> None:
@@ -25,4 +29,4 @@ def validate_roof_locations(roof_locations: Dict) -> None:
     for location in roof_locations['data']:
         assert isinstance(location, dict)
         assert "lat" in location
-        assert "lng" in location
+        assert "lon" in location
