@@ -35,3 +35,8 @@ find on Google Cloud.
 $ curl -H "Content-Type: application/json" -X POST -d '{"data":[{"lat":"1",
 "lng":"2"}]}' http://SERVER_ADDRESS
 ```
+
+# Stopping the server
+```commandline
+$ sudo killall python3
+```
