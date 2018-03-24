@@ -11,14 +11,18 @@ def get_roofs_information(roof_locations: Dict) -> Dict:
     """
     validate_roof_locations(roof_locations)
 
-    roofProperties = {"data":[]}
+    roof_properties = {"data": []}
     for coord in roof_locations["data"]:
-        latCoord = float(coord["lat"])
-        lonCoord = float(coord["lon"])
-        (roofType, orientation, area) = cnn(latCoord, lonCoord)
-        roofProperties["data"].append({"roofType":roofType, "orientation":orientation, "area":area})
+        lat_coord = float(coord["lat"])
+        lon_coord = float(coord["lon"])
+        (roofType, orientation, area) = cnn(lat_coord, lon_coord)
+        roof_properties["data"].append({
+            "roofType": roofType,
+            "orientation": orientation,
+            "area": area
+        })
 
-    return roofProperties
+    return roof_properties
 
 
 def validate_roof_locations(roof_locations: Dict) -> None:
