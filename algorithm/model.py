@@ -4,9 +4,9 @@ from algorithm.getSatImage import satImgDownload
 import cv2
 import numpy as np
 
-ROOF_TYPE_MODEL_PATH = "Model/roof_type_model.h5"
-ROOF_ORIENTATION_MODEL_PATH = "Model/roof_orientation_model.h5"
-ROOF_AREA_MODEL_PATH = "Model/roof_area_model.h5"
+ROOF_TYPE_MODEL_PATH = "model/roof_type_model.h5"
+ROOF_ORIENTATION_MODEL_PATH = "model/roof_orientation_model.h5"
+ROOF_AREA_MODEL_PATH = "model/roof_area_model.h5"
 
 roof_type_classes = ["Flat", "Gabled", "HalfHipped", "Hipped", "Mansard", "Pyramid", "Round"]
 orientation_classes = ["East", "East/South", "South", "South/West", "West"]
