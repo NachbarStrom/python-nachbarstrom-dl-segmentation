@@ -1,10 +1,12 @@
 import json
 
 from flask import Flask, request
+from flask_cors import CORS
 
 from algorithm import get_roofs_information
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/', methods=['POST'])
