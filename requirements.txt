@@ -1,8 +1,17 @@
+requests
 click==6.7
 Flask==0.12.2
 Flask-Cors==3.0.3
 itsdangerous==0.24
 Jinja2==2.10
+Keras==2.1.5
 MarkupSafe==1.0
+numpy==1.14.2
+opencv-python==3.4.0.12
+Pillow==5.0.0
+PyYAML==3.12
+scipy==1.0.0
 six==1.11.0
 Werkzeug==0.14.1
+xlrd==1.1.0
+XlsxWriter==1.0.2
