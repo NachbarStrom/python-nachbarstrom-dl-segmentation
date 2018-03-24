@@ -2,10 +2,10 @@ import json
 
 import requests
 
-logcal_url = "http://localhost"
+local_url = "http://localhost"
 data = {
     "data": [
-        {"lat": 1.0, "lon": 2.0}
+        {"lat": 10.0, "lon": 2.0}
     ]
 }
 response = requests.post(url=local_url, json=data)

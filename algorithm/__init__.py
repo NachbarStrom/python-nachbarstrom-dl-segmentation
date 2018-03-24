@@ -1,1 +1,1 @@
-from algorithm.get_roofs_information import Model
+from algorithm.model import Model

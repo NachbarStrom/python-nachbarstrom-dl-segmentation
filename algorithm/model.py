@@ -1,11 +1,21 @@
 from typing import Dict
+from keras.models import load_model
+from algorithm.getSatImage import satImgDownload
+import cv2
+import numpy as np
 
+ROOF_TYPE_MODEL_PATH = "Model/roof_type_model.h5"
+ROOF_ORIENTATION_MODEL_PATH = "Model/roof_orientation_model.h5"
+ROOF_AREA_MODEL_PATH = "Model/roof_area_model.h5"
+
+roof_type_classes = ["Flat", "Gabled", "HalfHipped", "Hipped", "Mansard", "Pyramid", "Round"]
+orientation_classes = ["East", "East/South", "South", "South/West", "West"]
 
 class Model:
     def __init__(self):
         self._roof_type_model = self._load_roof_type_model()
         self._roof_orientation_model = self._load_roof_orientation_model()
-        self._roof_area_model = self._load_roof_area_model()
+        #self._roof_area_model = self._load_roof_area_model()
 
     def get_roofs_information(self, roof_locations: Dict) -> Dict:
         """
@@ -24,11 +34,18 @@ class Model:
         for coord in roof_locations["data"]:
             lat_coord = float(coord["lat"])
             lon_coord = float(coord["lon"])
+            
             X = self._transform_coords_to_X(lat_coord, lon_coord)
-
-            roof_type = self._roof_type_model.predict(X)
-            orientation = self._roof_orientation_model.predict(X)
-            area = self._roof_area_model.predict(X)
+            
+            roof_type_class = np.argmax(max(self._roof_type_model.predict(X)))
+            roof_type = roof_type_classes[roof_type_class]
+            
+            roof_orientation_class = np.argmax(max(self._roof_orientation_model.predict(X)))
+            orientation = orientation_classes[roof_orientation_class]
+            
+            #area = self._roof_area_model.predict(X)
+            area = "20.0"
+            
             roof_properties["data"].append({
                 "roofType": roof_type,
                 "orientation": orientation,
@@ -38,16 +55,19 @@ class Model:
         return roof_properties
 
     def _load_roof_type_model(self):
-        pass
+        return load_model(ROOF_TYPE_MODEL_PATH)
 
     def _load_roof_orientation_model(self):
-        pass
+        return load_model(ROOF_ORIENTATION_MODEL_PATH)
 
     def _load_roof_area_model(self):
-        pass
+        return load_model(ROOF_AREA_MODEL_PATH)
 
     def _transform_coords_to_X(self, lat_coord, lon_coord):
-        pass
+        satImgDownload(lat_coord, lon_coord)
+        img = cv2.imread("currentLocation.png")
+        img = cv2.resize(img, (299,299))
+        return img[np.newaxis,:,:,:]
 
 
 def validate_roof_locations(roof_locations: Dict) -> None:
