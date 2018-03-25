@@ -15,7 +15,7 @@ class Model:
     def __init__(self):
         self._roof_type_model = self._load_roof_type_model()
         self._roof_orientation_model = self._load_roof_orientation_model()
-        #self._roof_area_model = self._load_roof_area_model()
+        self._roof_area_model = self._load_roof_area_model()
 
     def get_roofs_information(self, roof_locations: Dict) -> Dict:
         """
@@ -43,8 +43,9 @@ class Model:
             roof_orientation_class = np.argmax(max(self._roof_orientation_model.predict(X)))
             orientation = orientation_classes[roof_orientation_class]
             
-            #area = self._roof_area_model.predict(X)
-            area = "20.0"
+            area_prediction = self._roof_area_model.predict(X)
+            area = str(max(max(area_prediction)))
+            #area = "20.0"
             
             roof_properties["data"].append({
                 "roofType": roof_type,
