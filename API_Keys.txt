@@ -1,0 +1,7 @@
+APIs
+
+Google static maps:
+AIzaSyBV6-jGq4ciojBHuKZJ7CZryniRKxJTlFE
+
+NREL (PV calculation):
+q8VOaHxmP5GTjliWsOuyC6KLoU7f0SI6wYDBxvPt
