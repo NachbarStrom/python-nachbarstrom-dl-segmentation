@@ -15,10 +15,10 @@ cd tms-nachbarstrom-python/
 ````
 * Make sure the following packages are ready:
 ````commandline
-sudo apt-get upgrade
-sudo apt-get update
-sudo apt-get install libsm6
-sudo apt-get install libgtk2.0-dev
+sudo apt-get upgrade -y
+sudo apt-get update -y
+sudo apt-get install libsm6 -y
+sudo apt-get install libgtk2.0-dev -y
 ````
 
 * Then setup and activate your Python environment:
@@ -34,14 +34,11 @@ sudo python3 -m pip install -r requirements.txt
 nohup sudo python3 app.py >>logs 2>>logs &
 ```
 
-# Send a request
-You can send requests to the server with JSON payloads. You have to 
-replace 'SERVER_ADDRESS' with the actual http address, which you can
-find on Google Cloud.
-```commandline
-curl -H "Content-Type: application/json" -X POST -d '{"data":[{"lat":"1",
-"lng":"2"}]}' http://SERVER_ADDRESS
-```
+# Test the running server
+* Run the test script.
+````commandline
+python3 test_running_server
+````
 
 # Stopping the server
 ```commandline
