@@ -16,7 +16,7 @@ response_roof_prop = requests.post(url=roof_properties_url, json=data)
 
 assert response_roof_prop.status_code == 200
 
-payload_roof_prop = json.loads(response_roof_prop.content)
+payload_roof_prop = json.loads(response_roof_prop.content.decode('utf-8'))
 assert "data" in payload_roof_prop
 roofs = payload_roof_prop["data"]
 assert isinstance(roofs, list)
