@@ -18,7 +18,7 @@ response_solar_benefit = requests.post(url=pv_solar_benefits_url, json=roof_info
 
 assert response_solar_benefit.status_code == 200
 
-payload_solar_benefit = json.loads(response_solar_benefit.content)
+payload_solar_benefit = json.loads(response_solar_benefit.content.decode('utf-8'))
 assert "data" in payload_solar_benefit
 benefits = payload_solar_benefit["data"]
 assert "systemCapacity" in benefits
