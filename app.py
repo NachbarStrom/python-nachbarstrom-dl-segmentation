@@ -11,7 +11,7 @@ CORS(app)
 model = Model()
 
 
-@app.route('/', methods=['POST'])
+@app.route('/roof-properties', methods=['POST'])
 def handle_roofs_information_request():
     roof_locations = request.get_json()
     roofs_information = model.get_roofs_information(roof_locations)

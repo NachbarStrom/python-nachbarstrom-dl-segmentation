@@ -1,6 +1,9 @@
 from typing import Dict
+from keras import backend as K
+from importlib import reload
 from keras.models import load_model
-from algorithm.getSatImage import satImgDownload
+import os
+from algorithm.getSatImage import satImgDownload 
 import cv2
 import numpy as np
 
@@ -13,6 +16,7 @@ orientation_classes = ["East", "East/South", "South", "South/West", "West"]
 
 class Model:
     def __init__(self):
+        self._set_keras_backend("tensorflow")
         self._roof_type_model = self._load_roof_type_model()
         self._roof_orientation_model = self._load_roof_orientation_model()
         self._roof_area_model = self._load_roof_area_model()
@@ -69,6 +73,12 @@ class Model:
         img = cv2.imread("currentLocation.png")
         img = cv2.resize(img, (299,299))
         return img[np.newaxis,:,:,:]
+    
+    def _set_keras_backend(backend):
+        if K.backend() != backend:
+            os.environ['KERAS_BACKEND'] = backend
+            reload(K)
+            assert K.backend() == backend
 
 
 def validate_roof_locations(roof_locations: Dict) -> None:
