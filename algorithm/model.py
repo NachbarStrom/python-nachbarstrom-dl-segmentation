@@ -74,7 +74,7 @@ class Model:
         img = cv2.resize(img, (299,299))
         return img[np.newaxis,:,:,:]
     
-    def _set_keras_backend(backend):
+    def _set_keras_backend(self,backend):
         if K.backend() != backend:
             os.environ['KERAS_BACKEND'] = backend
             reload(K)
