@@ -1,9 +1,13 @@
-# ML
+# ML & models
 currentLocation.png
+model/
 
 # IDE related
 .idea/
 *.iml
+
+# Pytest
+.pytest_cache/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

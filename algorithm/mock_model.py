@@ -4,6 +4,7 @@ from algorithm import Model
 
 
 class MockModel(Model):
+
     def get_roofs_information(self, roof_locations: Dict) -> Dict:
         return {
             "data": [
@@ -14,3 +15,6 @@ class MockModel(Model):
                 }
             ]
         }
+
+    def update(self) -> None:
+        pass

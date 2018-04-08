@@ -1,34 +1,45 @@
 import cv2
 from typing import Dict
 import os
+
 from lazy_import import lazy_module, lazy_callable
 import numpy as np
 from importlib import reload
 
 from algorithm import Model
 from algorithm.getSatImage import satImgDownload
+from model_updater import ModelUpdater, AsyncModelUpdater
 
 # Keras with Tensorflow backend takes a long time to load, so we use a
-# lighter model for development and load the module lazily.
+# lighter model for development and load Keras lazily.
 backend = lazy_module("keras.backend")
 load_model = lazy_callable("keras.models.load_model")
 
+ROOF_TYPE_MODEL = "roof_type_model.h5"
+ROOF_ORIENTATION_MODEL = "roof_orientation_model.h5"
+ROOF_AREA_MODEL = "roof_area_model.h5"
+MODELS_FOLDER = "model"
 
-ROOF_TYPE_MODEL_PATH = "model/roof_type_model.h5"
-ROOF_ORIENTATION_MODEL_PATH = "model/roof_orientation_model.h5"
-ROOF_AREA_MODEL_PATH = "model/roof_area_model.h5"
-
-roof_type_classes = ["Flat", "Gabled", "HalfHipped", "Hipped", "Mansard", "Pyramid", "Round"]
+roof_type_classes = ["Flat", "Gabled", "HalfHipped", "Hipped", "Mansard",
+                     "Pyramid", "Round"]
 orientation_classes = ["East", "East/South", "South", "South/West", "West"]
 
 
 class TensorFlowModel(Model):
 
-    def __init__(self):
+    _MODEL_NAMES = [
+        ROOF_AREA_MODEL,
+        ROOF_ORIENTATION_MODEL,
+        ROOF_TYPE_MODEL
+    ]
+
+    def __init__(self, model_updater: ModelUpdater):
         self._set_tensorflow_backend()
-        self._roof_type_model = self._load_roof_type_model()
-        self._roof_orientation_model = self._load_roof_orientation_model()
-        self._roof_area_model = self._load_roof_area_model()
+        self._model_updater = model_updater
+        self._update_models_sequentially()
+        self._roof_type_model = self._load_model(ROOF_TYPE_MODEL)
+        self._roof_orientation_model = self._load_model(ROOF_ORIENTATION_MODEL)
+        self._roof_area_model = self._load_model(ROOF_AREA_MODEL)
 
     def get_roofs_information(self, roof_locations: Dict) -> Dict:
         self._validate_roof_locations(roof_locations)
@@ -57,17 +68,14 @@ class TensorFlowModel(Model):
 
         return roof_properties
 
-    @staticmethod
-    def _load_roof_type_model():
-        return load_model(ROOF_TYPE_MODEL_PATH)
+    def update(self) -> None:
+        for model in self._MODEL_NAMES:
+            self._model_updater.update_model(model)
 
     @staticmethod
-    def _load_roof_orientation_model():
-        return load_model(ROOF_ORIENTATION_MODEL_PATH)
-
-    @staticmethod
-    def _load_roof_area_model():
-        return load_model(ROOF_AREA_MODEL_PATH)
+    def _load_model(model_name):
+        file_path = os.path.join(MODELS_FOLDER, model_name)
+        return load_model(file_path)
 
     @staticmethod
     def _transform_coords_to_X(lat_coord, lon_coord):
@@ -83,3 +91,8 @@ class TensorFlowModel(Model):
             os.environ['KERAS_BACKEND'] = tensorflow
             reload(backend)
             assert backend.backend() == tensorflow
+
+    def _update_models_sequentially(self):
+        for model in self._MODEL_NAMES:
+            update_promise = self._model_updater.update_model(model)
+            update_promise.wait_until_update_complete()

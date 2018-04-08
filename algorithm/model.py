@@ -2,6 +2,7 @@ from typing import Dict
 
 
 class Model:
+
     def get_roofs_information(self, roof_locations: Dict) -> Dict:
         """
         This function takes a Dict with the location of several roofs
@@ -10,6 +11,9 @@ class Model:
         :param roof_locations: The roof locations
         :return: Roof information for every roof location
         """
+        raise NotImplementedError
+
+    def update(self) -> None:
         raise NotImplementedError
 
     @staticmethod

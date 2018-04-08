@@ -21,10 +21,11 @@ sudo apt-get install libsm6 -y
 sudo apt-get install libgtk2.0-dev -y
 ````
 
-* Then setup and activate your Python environment:
+* Then setup and activate your Python environment. If you are on Windows,
+replace the third command with 'env/Scripts/activate'.
 ```commandline
 sudo apt-get install python3-dev python3-venv python3-pip -y
-python3 -m venv env
+python3 -m venv env 
 source env/bin/activate
 sudo python3 -m pip install -r requirements.txt
 ```
@@ -41,9 +42,10 @@ python3 app.py --develop
 
 
 # Test the running server
-* Run the test script.
+* Run the test scripts.
 ````commandline
-python3 test_running_server
+python3 test_running_server_roof.py
+python3 test_running_server_solar.py
 ````
 
 # Stopping the server

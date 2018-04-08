@@ -5,13 +5,16 @@ from flask import Flask, request
 from flask_cors import CORS
 
 from algorithm import MockModel, TensorFlowModel
+from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--develop", help="Launches the app in developer mode.",
                     action="store_true")
 args = parser.parse_args()
-model = MockModel() if args.develop else TensorFlowModel()
+
+model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
+model = MockModel() if args.develop else TensorFlowModel(model_updater)
 
 app = Flask(__name__)
 CORS(app)
@@ -31,6 +34,13 @@ def handle_pv_solar_benefits():
     solar_benefits = get_pv_solar_benefits(roof_information)
     assert "data" in solar_benefits
     return json.dumps(solar_benefits)
+
+
+@app.route("/model-change")
+def model_changed():
+    model.update()
+    return "This server acknowledges the model change and will update its " \
+           "state."
 
 
 if __name__ == '__main__':
