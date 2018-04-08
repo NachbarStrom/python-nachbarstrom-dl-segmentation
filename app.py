@@ -1,14 +1,20 @@
+import argparse
 import json
 
 from flask import Flask, request
 from flask_cors import CORS
 
-from algorithm import Model
+from algorithm import MockModel, TensorFlowModel
 from pv_solar_benefits import get_pv_solar_benefits
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--develop", help="Launches the app in developer mode.",
+                    action="store_true")
+args = parser.parse_args()
+model = MockModel() if args.develop else TensorFlowModel()
 
 app = Flask(__name__)
 CORS(app)
-model = Model()
 
 
 @app.route('/roof-properties', methods=['POST'])

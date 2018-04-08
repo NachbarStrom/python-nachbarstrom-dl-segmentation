@@ -29,10 +29,16 @@ source env/bin/activate
 sudo python3 -m pip install -r requirements.txt
 ```
 
-* Finally, start running the server:
+* Finally, you can start the production server:
 ```commandline
 nohup sudo python3 app.py >>logs 2>>logs &
 ```
+# Development
+To launch th server with a lightweight model for development purposes, do:
+```commandline
+python3 app.py --develop
+```
+
 
 # Test the running server
 * Run the test script.
