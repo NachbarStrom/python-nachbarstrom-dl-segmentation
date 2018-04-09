@@ -8,7 +8,7 @@ from importlib import reload
 
 from algorithm import Model
 from algorithm.getSatImage import satImgDownload
-from model_updater import ModelUpdater, AsyncModelUpdater
+from model_updater import ModelUpdater
 
 # Keras with Tensorflow backend takes a long time to load, so we use a
 # lighter model for development and load Keras lazily.
