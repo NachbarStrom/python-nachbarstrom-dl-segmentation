@@ -30,6 +30,6 @@ class AsyncModelUpdater(ModelUpdater):
         self._model_updater_delegate = model_updater_delegate
 
     def update_model(self, model_name: str) -> UpdatePromise:
-        thread = AsyncUpdatePromise(self._model_updater_delegate, model_name)
-        thread.start()
-        return thread
+        promise = AsyncUpdatePromise(self._model_updater_delegate, model_name)
+        promise.start()
+        return promise
