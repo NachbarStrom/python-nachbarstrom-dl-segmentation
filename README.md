@@ -35,14 +35,17 @@ sudo python3 -m pip install -r requirements.txt
 nohup sudo python3 app.py >>logs 2>>logs &
 ```
 # Development & Testing
-To launch th server with a lightweight model for development purposes, do:
+Make sure your Python environment is active.
+* Run unit tests. The option 'rs' stands for report skipped.
+````commandline
+pytest -rs
+````
+* Integration tests: We can launch the server with a
+ lightweight model for testing purposes, do:
 ```commandline
 python3 app.py --develop
+pytest -rs --integration
 ```
-* Run the tests (make sure your Python environment is active)
-````commandline
-pytest
-````
 
 # Stopping the server
 ```commandline
