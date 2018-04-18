@@ -1,12 +1,14 @@
 import argparse
 import json
 
-from flask import Flask, request
+import numpy as np
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from algorithm import MockModel, TensorFlowModel
 from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
+from roof_polygon_extractor import MockRoofPolygonExtractor
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--develop", help="Launches the app in developer mode.",
@@ -23,6 +25,7 @@ def get_model():
 
 
 model = get_model()
+roof_polygon_extractor = MockRoofPolygonExtractor()
 app = Flask(__name__)
 CORS(app)
 
@@ -33,6 +36,14 @@ def handle_roofs_information_request():
     roofs_information = model.get_roofs_information(roof_locations)
     assert "data" in roofs_information
     return json.dumps(roofs_information)
+
+
+@app.route("/roofs-polygons", methods=["POST"])
+def get_roofs_polygons():
+    location = request.get_json()
+    image = np.zeros((1, 1, 1))
+    roof_polygons = roof_polygon_extractor.extract_from(image, location)
+    return jsonify(roof_polygons)
 
 
 @app.route('/pv-solar-benefits', methods=['POST'])
