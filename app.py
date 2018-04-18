@@ -13,9 +13,16 @@ parser.add_argument("--develop", help="Launches the app in developer mode.",
                     action="store_true")
 args = parser.parse_args()
 
-model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
-model = MockModel() if args.develop else TensorFlowModel(model_updater)
 
+def get_model():
+    if args.develop:
+        return MockModel()
+    else:
+        model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
+        return TensorFlowModel(model_updater)
+
+
+model = get_model()
 app = Flask(__name__)
 CORS(app)
 

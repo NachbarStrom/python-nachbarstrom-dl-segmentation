@@ -15,8 +15,9 @@ class GoogleStorageModelUpdater(ModelUpdater):
     BUCKET_NAME = "tms-solai-1521560021665.appspot.com"
     DESTINATION_FOLDER = "model"
 
-    def __init__(self, storage_client=storage.Client()):
-        assert storage_client is not None
+    def __init__(self, storage_client=None):
+        if storage_client is None:
+            storage_client = storage.Client()
         self._bucket = storage_client.get_bucket(self.BUCKET_NAME)
         self._local_model_file_path = None
 
