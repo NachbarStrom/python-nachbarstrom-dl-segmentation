@@ -34,18 +34,14 @@ sudo python3 -m pip install -r requirements.txt
 ```commandline
 nohup sudo python3 app.py >>logs 2>>logs &
 ```
-# Development
+# Development & Testing
 To launch th server with a lightweight model for development purposes, do:
 ```commandline
 python3 app.py --develop
 ```
-
-
-# Test the running server
-* Run the test scripts.
+* Run the tests (make sure your Python environment is active)
 ````commandline
-python3 test_running_server_roof.py
-python3 test_running_server_solar.py
+pytest
 ````
 
 # Stopping the server
