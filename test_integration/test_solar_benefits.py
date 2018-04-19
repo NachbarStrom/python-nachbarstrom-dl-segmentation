@@ -1,8 +1,8 @@
-import json
-
+import pytest
 import requests
 
 
+@pytest.mark.integration
 def test_running_server_solar_benefits():
     pv_solar_benefits_url = "http://localhost/pv-solar-benefits"
     roof_information = {
@@ -17,8 +17,7 @@ def test_running_server_solar_benefits():
     response_solar_benefit = requests.post(url=pv_solar_benefits_url,
                                            json=roof_information)
     assert response_solar_benefit.status_code == 200
-    payload_solar_benefit = json.loads(
-        response_solar_benefit.content.decode('utf-8'))
+    payload_solar_benefit = response_solar_benefit.json()
     assert "data" in payload_solar_benefit
     benefits = payload_solar_benefit["data"]
     assert "systemCapacity" in benefits

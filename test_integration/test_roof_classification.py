@@ -1,8 +1,8 @@
-import json
-
+import pytest as pytest
 import requests
 
 
+@pytest.mark.integration
 def test_running_server_roof_classification():
     global payload_roof_prop
     roof_properties_url = "http://localhost/roof-properties"
@@ -14,7 +14,7 @@ def test_running_server_roof_classification():
     # Test - roof properties
     response_roof_prop = requests.post(url=roof_properties_url, json=data)
     assert response_roof_prop.status_code == 200
-    payload_roof_prop = json.loads(response_roof_prop.content.decode('utf-8'))
+    payload_roof_prop = response_roof_prop.json()
     assert "data" in payload_roof_prop
     roofs = payload_roof_prop["data"]
     assert isinstance(roofs, list)
