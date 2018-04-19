@@ -1,16 +1,15 @@
 from typing import Dict
-
-import numpy as np
+from PIL.Image import Image
 
 
 class RoofPolygonExtractor:
 
-    def extract_from(self, image: np.ndarray, center_coors: Dict) -> Dict:
+    def extract_from(self, image: Image, center_coors: Dict) -> Dict:
         """
         Extract a list of polygons. Each polygon delimits a roof in the
         input image. Input 'center_coors' is the coordinates at the
         center of the image.
-        :param image: Image in 3-channel matrix format.
+        :param image: Pillow Image
         :param center_coors: Example: { "lat": "1.2", "lon": "1.0" }
         :return: A json-dictionary like 'example_output.py'
         """
@@ -20,8 +19,7 @@ class RoofPolygonExtractor:
     def _validate_input(image, center_coors):
         """Subclasses can validate the input before processing it."""
         assert "lat" in center_coors and "lon" in center_coors
-        assert isinstance(image, np.ndarray)
-        assert len(image.shape) == 3
+        assert isinstance(image, Image)
 
     def _validate_output(self, output: Dict):
         """Subclasses can validate the input before returning it."""
