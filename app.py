@@ -1,11 +1,11 @@
 import argparse
 import json
 
-import numpy as np
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from algorithm import MockModel, TensorFlowModel
+from algorithm.image_provider import MockImageProvider, GoogleImageProvider
 from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
 from roof_polygon_extractor import MockRoofPolygonExtractor
@@ -26,6 +26,7 @@ def get_model():
 
 model = get_model()
 roof_polygon_extractor = MockRoofPolygonExtractor()
+image_provider = MockImageProvider() if args.develop else GoogleImageProvider()
 app = Flask(__name__)
 CORS(app)
 
@@ -41,7 +42,7 @@ def handle_roofs_information_request():
 @app.route("/roofs-polygons", methods=["POST"])
 def get_roofs_polygons():
     center_coordinates = request.get_json()
-    image = np.zeros((1, 1, 1))
+    image = image_provider.image_from(center_coordinates)
     roof_polygons = roof_polygon_extractor.extract_from(
         image, center_coordinates)
     return jsonify(roof_polygons)

@@ -1,10 +1,10 @@
-import numpy as np
 import pytest
+from PIL.Image import Image
 
 from .. import RoofPolygonExtractor, MockRoofPolygonExtractor
 
 valid_location = {"lat": "1.0", "lon": "1.0"}
-valid_image = np.zeros((1, 1, 1))
+valid_image = Image()
 
 
 @pytest.fixture
@@ -17,7 +17,7 @@ def test_api_with_valid_input(extractor: RoofPolygonExtractor):
 
 
 def test_validation_rejects_invalid_image(extractor: RoofPolygonExtractor):
-    invalid_image = np.zeros(1)
+    invalid_image = None
     with pytest.raises(AssertionError):
         extractor.extract_from(invalid_image, valid_location)
 
