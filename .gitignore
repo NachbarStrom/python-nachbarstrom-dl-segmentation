@@ -2,6 +2,9 @@
 currentLocation.png
 model/
 
+# credentials
+cred/
+
 # IDE related
 .idea/
 *.iml

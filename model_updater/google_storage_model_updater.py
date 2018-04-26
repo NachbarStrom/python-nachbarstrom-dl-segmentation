@@ -17,7 +17,10 @@ class GoogleStorageModelUpdater(ModelUpdater):
 
     def __init__(self, storage_client=None):
         if storage_client is None:
-            storage_client = storage.Client()
+            json_credentials_path = \
+                os.path.join("cred", "google_service_account.json")
+            storage_client = storage.Client.from_service_account_json(
+                json_credentials_path)
         self._bucket = storage_client.get_bucket(self.BUCKET_NAME)
         self._local_model_file_path = None
 
