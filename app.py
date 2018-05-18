@@ -5,10 +5,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from algorithm import MockModel, TensorFlowModel
-from algorithm.image_provider import MockImageProvider, GoogleImageProvider
+from image_provider import MockImageProvider, GoogleImageProvider
 from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
 from roof_polygon_extractor import MockRoofPolygonExtractor
+from world import Location
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--develop", help="Launches the app in developer mode.",
@@ -41,10 +42,12 @@ def handle_roofs_information_request():
 
 @app.route("/roofs-polygons", methods=["POST"])
 def get_roofs_polygons():
-    center_coordinates = request.get_json()
-    image = image_provider.image_from(center_coordinates)
+    center_coords = request.get_json()
+    location = Location(latitude=center_coords["lat"],
+                        longitude=center_coords["lon"])
+    image = image_provider.image_from(location)
     roof_polygons = roof_polygon_extractor.extract_from(
-        image, center_coordinates)
+        image, center_coords)
     return jsonify(roof_polygons)
 
 

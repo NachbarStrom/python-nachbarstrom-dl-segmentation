@@ -1,9 +1,9 @@
-from typing import Dict
 from urllib import request
 from io import BytesIO
 from PIL import Image
 
-from algorithm.image_provider import ImageProvider
+from world import Location
+from .image_provider import ImageProvider
 
 
 class GoogleImageProvider(ImageProvider):
@@ -20,18 +20,16 @@ class GoogleImageProvider(ImageProvider):
                             "&size=400x400" \
                             "&key=" + api_key
 
-    def image_from(self, center_coors: Dict) -> Image.Image:
-        self._validate_input_format(center_coors)
-        self._get_image(center_coors)
+    def image_from(self, location: Location) -> Image.Image:
+        self._validate_input_format(location)
+        self._get_image(location)
         self._validate_output_format(self._image)
         return self._image
 
-    def _get_image(self, center_coors):
-        url = self._fill_url(center_coors)
+    def _get_image(self, location):
+        url = self._fill_url(location)
         buffer = BytesIO(request.urlopen(url).read())
         self._image = Image.open(buffer)
 
-    def _fill_url(self, center_coors):
-        lat, lon = center_coors["lat"], center_coors["lon"]
-        url = self._request_url % (lat, lon)
-        return url
+    def _fill_url(self, location: Location):
+        return self._request_url % (location.latitude, location.longitude)

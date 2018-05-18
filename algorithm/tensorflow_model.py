@@ -2,6 +2,7 @@ import cv2
 from typing import Dict
 import os
 
+from PIL.Image import Image
 from lazy_import import lazy_module, lazy_callable
 import numpy as np
 from importlib import reload
@@ -49,15 +50,15 @@ class TensorFlowModel(Model):
             lat_coord = float(coord["lat"])
             lon_coord = float(coord["lon"])
             
-            X = self._transform_coords_to_X(lat_coord, lon_coord)
+            pixel_array = self._get_image_of_location(lat_coord, lon_coord)
             
-            roof_type_class = np.argmax(max(self._roof_type_model.predict(X)))
+            roof_type_class = np.argmax(max(self._roof_type_model.predict(pixel_array)))
             roof_type = roof_type_classes[roof_type_class]
             
-            roof_orientation_class = np.argmax(max(self._roof_orientation_model.predict(X)))
+            roof_orientation_class = np.argmax(max(self._roof_orientation_model.predict(pixel_array)))
             orientation = orientation_classes[roof_orientation_class]
             
-            area_prediction = self._roof_area_model.predict(X)
+            area_prediction = self._roof_area_model.predict(pixel_array)
             area = str(max(max(area_prediction)))
 
             roof_properties["data"].append({
@@ -78,7 +79,7 @@ class TensorFlowModel(Model):
         return load_model(file_path)
 
     @staticmethod
-    def _transform_coords_to_X(lat_coord, lon_coord):
+    def _get_image_of_location(lat_coord, lon_coord) -> Image:
         satImgDownload(lat_coord, lon_coord)
         img = cv2.imread("currentLocation.png")
         img = cv2.resize(img, (299,299))
