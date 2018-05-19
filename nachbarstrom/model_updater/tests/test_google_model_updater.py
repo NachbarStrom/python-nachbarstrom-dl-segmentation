@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from model_updater import GoogleStorageModelUpdater
+from .. import GoogleStorageModelUpdater
 
 
 def test_construction():

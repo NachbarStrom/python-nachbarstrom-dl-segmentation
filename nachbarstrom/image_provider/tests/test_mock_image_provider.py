@@ -2,7 +2,7 @@ import pytest
 from PIL.Image import Image
 
 from .. import MockImageProvider
-from world import Location
+from nachbarstrom.world import Location
 
 
 @pytest.fixture

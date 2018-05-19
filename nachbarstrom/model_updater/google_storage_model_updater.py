@@ -2,7 +2,7 @@ import os
 import pathlib
 from google.cloud import storage
 
-from model_updater import ModelUpdater, UpdatePromise
+from .model_updater import ModelUpdater, UpdatePromise
 
 
 class GoogleStorageUpdatePromise(UpdatePromise):

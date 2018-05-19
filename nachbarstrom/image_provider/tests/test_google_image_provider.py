@@ -4,7 +4,7 @@ import pytest
 from PIL.Image import Image
 
 from .. import GoogleImageProvider
-from world import Location
+from nachbarstrom.world import Location
 
 germany_location = Location(latitude=48.0, longitude=11.0)
 

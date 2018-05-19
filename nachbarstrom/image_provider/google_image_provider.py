@@ -2,7 +2,7 @@ from urllib import request
 from io import BytesIO
 from PIL import Image
 
-from world import Location
+from nachbarstrom.world import Location
 from .image_provider import ImageProvider
 
 

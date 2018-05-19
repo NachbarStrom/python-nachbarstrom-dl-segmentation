@@ -4,12 +4,12 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from algorithm import MockRoofProvider, TensorFlowRoofProvider
-from image_provider import MockImageProvider, GoogleImageProvider
-from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
+from nachbarstrom.roof_provider import MockRoofProvider, TensorFlowRoofProvider
+from nachbarstrom.image_provider import MockImageProvider, GoogleImageProvider
+from nachbarstrom.model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
-from roof_polygon_extractor import MockRoofPolygonExtractor
-from world import Location
+from nachbarstrom.roof_polygon_extractor import MockRoofPolygonExtractor
+from nachbarstrom.world import Location
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--develop", help="Launches the app in developer mode.",

@@ -1,6 +1,6 @@
 import threading
 
-from model_updater import ModelUpdater, UpdatePromise
+from .model_updater import ModelUpdater, UpdatePromise
 
 
 class AsyncUpdatePromise(UpdatePromise, threading.Thread):

@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from roof_polygon_extractor import RoofPolygonExtractor
+from nachbarstrom.roof_polygon_extractor import RoofPolygonExtractor
 
 
 @pytest.mark.integration

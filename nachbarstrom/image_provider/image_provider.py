@@ -1,6 +1,6 @@
 from PIL.Image import Image
 
-from world import Location
+from nachbarstrom.world import Location
 
 
 class ImageProvider:
