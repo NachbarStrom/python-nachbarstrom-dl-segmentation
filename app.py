@@ -23,12 +23,12 @@ def get_roof_provider():
         return MockRoofProvider()
     else:
         model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
-        return TensorFlowRoofProvider(model_updater)
+        return TensorFlowRoofProvider(model_updater, IMAGE_PROVIDER)
 
 
-ROOF_PROVIDER = get_roof_provider()
 ROOF_POLYGON_EXTRACTOR = MockRoofPolygonExtractor()
 IMAGE_PROVIDER = MockImageProvider() if ARGS.develop else GoogleImageProvider()
+ROOF_PROVIDER = get_roof_provider()
 app = Flask(__name__)
 CORS(app)
 
