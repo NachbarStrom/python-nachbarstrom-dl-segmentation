@@ -9,7 +9,7 @@ from .image_provider import ImageProvider
 class GoogleImageProvider(ImageProvider):
     """Not thread-safe"""
 
-    def __init__(self, zoom: int=18):
+    def __init__(self, zoom: int=18) -> None:
         assert isinstance(zoom, int)
         api_key = "AIzaSyBV6-jGq4ciojBHuKZJ7CZryniRKxJTlFE"
         self._zoom = zoom

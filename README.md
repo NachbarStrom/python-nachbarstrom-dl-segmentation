@@ -59,3 +59,13 @@ pytest -rs --integration
 ```commandline
 sudo killall python3
 ```
+
+# Development tips
+Lint the code:
+````bash
+pylint app.py
+````
+Use static type checker:
+````bash
+mypy --ignore-missing-imports app.py
+````

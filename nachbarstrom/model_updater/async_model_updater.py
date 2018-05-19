@@ -6,7 +6,7 @@ from .model_updater import ModelUpdater, UpdatePromise
 class AsyncUpdatePromise(UpdatePromise, threading.Thread):
     """A thread that runs the model update in the background"""
 
-    def __init__(self, model_updater: ModelUpdater, model_name: str):
+    def __init__(self, model_updater: ModelUpdater, model_name: str) -> None:
         super().__init__()
         self._model_name = model_name
         self._model_updater = model_updater
@@ -25,7 +25,7 @@ class AsyncModelUpdater(ModelUpdater):
     constructor and delegates to it the model updating.
     """
 
-    def __init__(self, model_updater_delegate: ModelUpdater):
+    def __init__(self, model_updater_delegate: ModelUpdater) -> None:
         assert model_updater_delegate is not None
         self._model_updater_delegate = model_updater_delegate
 

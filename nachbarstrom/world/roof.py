@@ -21,7 +21,7 @@ class RoofOrientation(Enum):
 
 class Roof:
     def __init__(self, roof_type: RoofType, orientation: RoofOrientation,
-                 area: float):
+                 area: float) -> None:
         self._validate_input(roof_type, orientation, area)
         self.type = roof_type
         self.orientation = orientation

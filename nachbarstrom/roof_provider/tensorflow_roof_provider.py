@@ -31,7 +31,7 @@ class TensorFlowRoofProvider(RoofProvider):
         ROOF_TYPE_MODEL
     ]
 
-    def __init__(self, model_updater: ModelUpdater):
+    def __init__(self, model_updater: ModelUpdater) -> None:
         self._set_tensorflow_backend()
         self._model_updater = model_updater
         self._update_models_sequentially()
