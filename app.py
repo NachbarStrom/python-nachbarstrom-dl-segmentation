@@ -34,10 +34,12 @@ CORS(app)
 
 @app.route('/roof-properties', methods=['POST'])
 def handle_roofs_information_request():
-    roof_locations = request.get_json()
+    roof_locations_dict = request.get_json()
+    roof_locations = [Location.from_dict(coords) for coords
+                      in roof_locations_dict["data"]]
     roofs_information = model.get_roofs_information(roof_locations)
-    assert "data" in roofs_information
-    return json.dumps(roofs_information)
+    response = {"data": [roof.serialize() for roof in roofs_information]}
+    return json.dumps(response)
 
 
 @app.route("/roofs-polygons", methods=["POST"])
