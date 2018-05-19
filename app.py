@@ -6,7 +6,7 @@ from flask_cors import CORS
 
 from nachbarstrom.roof_provider import MockRoofProvider, TensorFlowRoofProvider
 from nachbarstrom.image_provider import MockImageProvider, GoogleImageProvider
-from nachbarstrom.model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
+from nachbarstrom.file_updater import AsyncFileUpdater, GoogleStorageFileUpdater
 from pv_solar_benefits import get_pv_solar_benefits
 from nachbarstrom.roof_polygon_extractor import MockRoofPolygonExtractor
 from nachbarstrom.world import Location
@@ -22,7 +22,7 @@ def get_roof_provider():
     if ARGS.develop:
         return MockRoofProvider()
     else:
-        model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
+        model_updater = AsyncFileUpdater(GoogleStorageFileUpdater())
         return TensorFlowRoofProvider(model_updater, IMAGE_PROVIDER)
 
 

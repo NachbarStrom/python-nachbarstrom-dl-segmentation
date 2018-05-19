@@ -3,15 +3,15 @@ class UpdatePromise:
 
     def wait_until_update_complete(self) -> None:
         """Makes the system wait until the update is complete."""
-        raise NotImplementedError
+        pass
 
 
-class ModelUpdater:
-    def update_model(self, model_name: str) -> UpdatePromise:
+class FileUpdater:
+    def update_file(self, file_name: str) -> UpdatePromise:
         """
-        Updates the input model to its latest version.
-        :param model_name: Name of the model.
+        Updates the input file to its latest version.
+        :param file_name: The file to update.
         :return: A promise that describes the current state of the
-        model update.
+        update.
         """
         raise NotImplementedError

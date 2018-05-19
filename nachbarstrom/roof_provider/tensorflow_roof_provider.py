@@ -6,7 +6,7 @@ from importlib import reload
 
 from nachbarstrom.image_provider import ImageProvider
 from nachbarstrom.roof_provider import RoofProvider
-from nachbarstrom.model_updater import ModelUpdater
+from nachbarstrom.file_updater import FileUpdater
 
 # Keras with Tensorflow backend takes a long time to load, so we use a
 # lighter model for development and load Keras lazily.
@@ -31,7 +31,7 @@ class TensorFlowRoofProvider(RoofProvider):
         ROOF_TYPE_MODEL
     ]
 
-    def __init__(self, model_updater: ModelUpdater,
+    def __init__(self, model_updater: FileUpdater,
                  image_provider: ImageProvider) -> None:
         self._set_tensorflow_backend()
         self._image_provider = image_provider
@@ -62,7 +62,7 @@ class TensorFlowRoofProvider(RoofProvider):
 
     def update(self):
         for model in self._MODEL_NAMES:
-            self._model_updater.update_model(model)
+            self._model_updater.update_file(model)
 
     @staticmethod
     def _load_model(model_name):
@@ -86,5 +86,5 @@ class TensorFlowRoofProvider(RoofProvider):
 
     def _update_models_sequentially(self):
         for model in self._MODEL_NAMES:
-            update_promise = self._model_updater.update_model(model)
+            update_promise = self._model_updater.update_file(model)
             update_promise.wait_until_update_complete()
