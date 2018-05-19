@@ -1,2 +1,2 @@
-from algorithm.model import Model, MockModel
-from algorithm.tensorflow_model import TensorFlowModel
+from algorithm.roof_provider import RoofProvider, MockRoofProvider
+from algorithm.tensorflow_roof_provider import TensorFlowRoofProvider

@@ -4,7 +4,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from algorithm import MockModel, TensorFlowModel
+from algorithm import MockRoofProvider, TensorFlowRoofProvider
 from image_provider import MockImageProvider, GoogleImageProvider
 from model_updater import AsyncModelUpdater, GoogleStorageModelUpdater
 from pv_solar_benefits import get_pv_solar_benefits
@@ -19,10 +19,10 @@ args = parser.parse_args()
 
 def get_model():
     if args.develop:
-        return MockModel()
+        return MockRoofProvider()
     else:
         model_updater = AsyncModelUpdater(GoogleStorageModelUpdater())
-        return TensorFlowModel(model_updater)
+        return TensorFlowRoofProvider(model_updater)
 
 
 model = get_model()
@@ -34,12 +34,13 @@ CORS(app)
 
 @app.route('/roof-properties', methods=['POST'])
 def handle_roofs_information_request():
-    roof_locations_dict = request.get_json()
-    roof_locations = [Location.from_dict(coords) for coords
-                      in roof_locations_dict["data"]]
-    roofs_information = model.get_roofs_information(roof_locations)
-    response = {"data": [roof.serialize() for roof in roofs_information]}
-    return json.dumps(response)
+    roofs_info = []
+    coordinates_list = request.get_json()["data"]
+    for coordinates in coordinates_list:
+        location = Location.from_dict(coordinates)
+        roof = model.get_roof(center_location=location)
+        roofs_info.append(roof.serialize())
+    return json.dumps({"data": roofs_info})
 
 
 @app.route("/roofs-polygons", methods=["POST"])

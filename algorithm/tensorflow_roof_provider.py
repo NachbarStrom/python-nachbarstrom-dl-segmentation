@@ -1,5 +1,4 @@
 import cv2
-from typing import Sequence, List
 import os
 
 from PIL.Image import Image
@@ -7,7 +6,7 @@ from lazy_import import lazy_module, lazy_callable
 import numpy as np
 from importlib import reload
 
-from algorithm import Model
+from algorithm import RoofProvider
 from algorithm.getSatImage import satImgDownload
 from model_updater import ModelUpdater
 
@@ -24,7 +23,7 @@ ROOF_AREA_MODEL = "roof_area_model.h5"
 MODELS_FOLDER = "model"
 
 
-class TensorFlowModel(Model):
+class TensorFlowRoofProvider(RoofProvider):
 
     _MODEL_NAMES = [
         ROOF_AREA_MODEL,
@@ -40,30 +39,22 @@ class TensorFlowModel(Model):
         self._roof_orientation_model = self._load_model(ROOF_ORIENTATION_MODEL)
         self._roof_area_model = self._load_model(ROOF_AREA_MODEL)
 
-    def get_roofs_information(
-            self, roof_locations: Sequence[Location]) -> List[Roof]:
-        self._validate_input(roof_locations)
+    def get_roof(self, center_location: Location) -> Roof:
+        self._validate_input(center_location)
+        pixel_array = self._get_image_of_location(center_location)
 
-        roofs_information = []
-        for location in roof_locations:
-            
-            pixel_array = self._get_image_of_location(location)
-            
-            roof_type_index = np.argmax(self._roof_type_model.predict(pixel_array))
-            roof_type = RoofType(roof_type_index)
-            
-            roof_orientation_index = np.argmax(self._roof_orientation_model.predict(pixel_array))
-            orientation = RoofOrientation(roof_orientation_index)
-            
-            area_prediction = self._roof_area_model.predict(pixel_array)
-            print("INFO: Raw area prediction: %f" % area_prediction)
-            area = max(max(area_prediction))
+        roof_type_index = np.argmax(self._roof_type_model.predict(pixel_array))
+        roof_type = RoofType(roof_type_index)
 
-            roof = Roof(roof_type, orientation, area)
-            roofs_information.append(roof)
+        roof_orientation_index = np.argmax(self._roof_orientation_model.predict(pixel_array))
+        orientation = RoofOrientation(roof_orientation_index)
 
-        self._validate_response(roofs_information)
-        return roofs_information
+        area_prediction = self._roof_area_model.predict(pixel_array)
+        print("INFO: Raw area prediction: %f" % area_prediction)
+
+        roof = Roof(roof_type, orientation, area_prediction)
+        self._validate_response(roof)
+        return roof
 
     def update(self):
         for model in self._MODEL_NAMES:
