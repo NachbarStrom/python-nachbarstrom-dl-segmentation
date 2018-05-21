@@ -4,6 +4,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from nachbarstrom.roof_polygon_provider import MockRoofPolygonProvider
 from nachbarstrom.roof_provider import MockRoofProvider, TensorFlowRoofProvider
 from nachbarstrom.image_provider import MockImageProvider, GoogleImageProvider
 from nachbarstrom.file_updater import AsyncFileUpdater, GoogleStorageFileUpdater
@@ -29,6 +30,7 @@ def get_roof_provider():
 ROOF_POLYGON_EXTRACTOR = MockRoofPolygonExtractor()
 IMAGE_PROVIDER = MockImageProvider() if ARGS.develop else GoogleImageProvider()
 ROOF_PROVIDER = get_roof_provider()
+ROOF_POLYGON_PROVIDER = MockRoofPolygonProvider()
 app = Flask(__name__)
 CORS(app)
 
@@ -47,11 +49,8 @@ def handle_roofs_information_request():
 @app.route("/roofs-polygons", methods=["POST"])
 def get_roofs_polygons():
     center_coords = request.get_json()
-    location = Location(latitude=center_coords["lat"],
-                        longitude=center_coords["lon"])
-    image = IMAGE_PROVIDER.image_from(location)
-    roof_polygons = ROOF_POLYGON_EXTRACTOR.extract_from(
-        image, center_coords)
+    location = Location.from_dict(center_coords)
+    roof_polygons = ROOF_POLYGON_PROVIDER.get_nearby_roof_polygons(location, 50)
     return jsonify(roof_polygons)
 
 
