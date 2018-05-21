@@ -1,5 +1,6 @@
 import pytest
 import requests
+from .ip_fixture import ip_fixture
 
 
 def roof_polygons_as_expected(roof_polygons):
@@ -12,8 +13,8 @@ def roof_polygons_as_expected(roof_polygons):
 
 
 @pytest.mark.integration
-def test_get_roofs_polygons():
-    url = "http://localhost/roofs-polygons"
+def test_get_roofs_polygons(ip_fixture):
+    url = "http://{ip}/roofs-polygons".format(ip=ip_fixture)
     center_coordinates = {"lat": "48.1830097", "lon": "11.6099888"}
     response = requests.post(
         url=url,

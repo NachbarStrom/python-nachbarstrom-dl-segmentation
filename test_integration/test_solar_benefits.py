@@ -1,10 +1,11 @@
 import pytest
 import requests
+from .ip_fixture import ip_fixture
 
 
 @pytest.mark.integration
-def test_running_server_solar_benefits():
-    pv_solar_benefits_url = "http://localhost/pv-solar-benefits"
+def test_running_server_solar_benefits(ip_fixture):
+    pv_solar_benefits_url = "http://{ip}/pv-solar-benefits".format(ip=ip_fixture)
     roof_information = {
         "data": {
             "lat": 48,

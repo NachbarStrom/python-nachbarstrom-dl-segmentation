@@ -1,2 +1,1 @@
 from .roof_polygon_provider import RoofPolygonProvider, MockRoofPolygonProvider
-from .osm_roof_polygon_provider import OSMRoofPolygonProvider
