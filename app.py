@@ -70,4 +70,9 @@ def model_changed():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(
+        host="0.0.0.0",
+        port=80,
+        threaded=False # Otherwise, Flask+Keras+TensorFlow will blow up
+        # See: https://goo.gl/idiCL4
+    )
