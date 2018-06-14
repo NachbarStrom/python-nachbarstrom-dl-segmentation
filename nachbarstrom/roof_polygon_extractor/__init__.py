@@ -1,2 +1,0 @@
-from .roof_polygon_extractor import RoofPolygonExtractor
-from .mock_roof_polygon_extractor import MockRoofPolygonExtractor

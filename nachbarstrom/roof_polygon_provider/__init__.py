@@ -1,1 +1,0 @@
-from .roof_polygon_provider import RoofPolygonProvider, MockRoofPolygonProvider
