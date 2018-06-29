@@ -7,30 +7,31 @@ sudo apt-get update -y
 git clone https://github.com/tomasruizt/tms-nachbarstrom-python
 cd tms-nachbarstrom-python/
 ````
+
+# If not running on Google Cloud
 * Prepare a folder for the credentials:
 ````commandline
 mkdir cred
 ````
-
 * If running on Azure, you can find a machine address e.g. 
 'the-machine-address' to connect to. 
 * Put the Google service credentials on the server. For example, by copying 
 them from your machine to the server:
 ````commandline
-* scp -i private_key google_service_credentials.json 
+scp -i private_key google_service_credentials.json 
 the-machine-address:~/tms-nachbarstrom-python/cred
 ````
 # Setup the environment
-* Run the setup script for 'Ubuntu 16.04 LTS', or follow its step, if you are
+* Run the setup script for 'Ubuntu 16.04 LTS', or follow its steps, if you are
  on another platform.
 ````commandline
-./setup_ubuntu16.sh
+bash ./setup_ubuntu16.sh
 ````
 * Your new Python environment is located in the 'env/' folder.
-* Activate your Python environent. If you are on Windows,
-replace the third command with 'env/Scripts/activate'.
+* Activate your Python environment. If you are on Windows,
+replace the command with 'env-prod/Scripts/activate'.
 ```commandline 
-source env/bin/activate
+source env-prod/bin/activate
 ```
 
 * Finally, you can start the server either in 'production' mode or in 
