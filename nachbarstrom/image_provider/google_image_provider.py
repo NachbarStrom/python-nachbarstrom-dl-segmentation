@@ -9,15 +9,18 @@ from .image_provider import ImageProvider
 class GoogleImageProvider(ImageProvider):
     """Not thread-safe"""
 
-    def __init__(self, zoom: int=18) -> None:
+    def __init__(self, zoom: int=18, size: int=400) -> None:
         assert isinstance(zoom, int)
+        assert isinstance(size, int)
         api_key = "AIzaSyBV6-jGq4ciojBHuKZJ7CZryniRKxJTlFE"
         self._zoom = zoom
+        self._size = size
         self._image = None
         self._request_url = "https://maps.googleapis.com/maps/api/staticmap?" \
-                            "maptype=satellite&center=%s,%s" \
-                            "&zoom=" + str(zoom) + \
-                            "&size=400x400" \
+                            "maptype=satellite" \
+                            "&center={latitude:f},{longitude:f}" \
+                            "&zoom={zoom}" \
+                            "&size={size}x{size}" \
                             "&key=" + api_key
 
     def image_from(self, location: Location) -> Image.Image:
@@ -32,4 +35,9 @@ class GoogleImageProvider(ImageProvider):
         self._image = Image.open(buffer)
 
     def _fill_url(self, location: Location):
-        return self._request_url % (location.latitude, location.longitude)
+        return self._request_url.format(
+            latitude=location.latitude,
+            longitude=location.longitude,
+            size=self._size,
+            zoom=self._zoom,
+        )
