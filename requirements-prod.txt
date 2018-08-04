@@ -25,6 +25,7 @@ Keras==2.1.6
 lazy-import==0.2.2
 Markdown==2.6.11
 MarkupSafe==1.0
+-e git+git@github.com:tomasruizt/python-nachbarstrom-commons.git@c9aedfa24f4af2b536fcc5f3d0ef717f247ce437#egg=nachbarstrom_commons
 numpy==1.14.3
 overpass==0.6.0
 Pillow==5.1.0
