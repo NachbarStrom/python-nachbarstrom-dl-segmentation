@@ -27,22 +27,23 @@ the-machine-address:~/tms-nachbarstrom-python/cred
 ````commandline
 bash ./setup_ubuntu16.sh
 ````
-* Your new Python environment is located in the 'env/' folder.
+* Your new Python environment is located in the 'env-prod/' folder.
 * Activate your Python environment. If you are on Windows,
 replace the command with 'env-prod/Scripts/activate'.
 ```commandline 
 source env-prod/bin/activate
 ```
 
+* Install the ``nachbarstrom-commons`` package. 
 * Finally, you can start the server either in 'production' mode or in 
 'develop' mode.
 * For production:
 ```commandline
-nohup sudo python3 app.py >>logs 2>>logs &
+nohup sudo python3 -m nachbarstrom.inference.web_server.app >>logs 2>>logs &
 ```
 * For development:
 ````commandline
-python3 app.py --develop
+sudo python3 -m nachbarstrom.inference.web_server.app --development
 ````
 
 # Testing
