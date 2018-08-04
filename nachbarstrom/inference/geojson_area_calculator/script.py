@@ -1,6 +1,6 @@
 import requests
 
-from nachbarstrom.geojson_area_calculator import GeoJsonAreaCalculator
+from nachbarstrom.inference.geojson_area_calculator import GeoJsonAreaCalculator
 
 if __name__ == '__main__':
     url = "http://nachbarstrom-backend.northeurope.cloudapp.azure.com" \

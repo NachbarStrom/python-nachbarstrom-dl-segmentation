@@ -1,4 +1,4 @@
-from nachbarstrom.world import Location, Roof, RoofType, RoofOrientation
+from nachbarstrom.commons.world import Location, Roof, RoofType, RoofOrientation
 
 
 class RoofProvider:

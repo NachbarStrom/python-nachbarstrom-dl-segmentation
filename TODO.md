@@ -1,6 +1,8 @@
 # Testing
 * AsyncModelUpdater
 * TensorFlowModel
+* GeoJsonAreaCalculator
+* pv_solar_benefits
 
 # Design
 * Cleanly initialize the components of the --develop server. Encapsulate that

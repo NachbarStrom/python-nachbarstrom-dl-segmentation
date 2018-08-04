@@ -4,15 +4,13 @@ from lazy_import import lazy_module, lazy_callable
 import numpy as np
 from importlib import reload
 
-from nachbarstrom.image_provider import ImageProvider
-from nachbarstrom.roof_provider import RoofProvider
-from nachbarstrom.file_updater import FileUpdater
+from nachbarstrom.commons.image_provider import ImageProvider
+from nachbarstrom.commons.world import Location, Roof, RoofType, RoofOrientation
+from nachbarstrom.inference.file_updater import FileUpdater
+from . import RoofProvider
 
 # Keras with Tensorflow backend takes a long time to load, so we use a
 # lighter model for development and load Keras lazily.
-from nachbarstrom.world import Location, Roof, RoofType, RoofOrientation
-
-
 backend = lazy_module("keras.backend")
 load_model = lazy_callable("keras.models.load_model")
 

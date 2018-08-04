@@ -4,11 +4,12 @@ import json
 from flask import Flask, request
 from flask_cors import CORS
 
-from nachbarstrom.roof_provider import MockRoofProvider, TensorFlowRoofProvider
-from nachbarstrom.image_provider import MockImageProvider, GoogleImageProvider
-from nachbarstrom.file_updater import AsyncFileUpdater, GoogleStorageFileUpdater
-from pv_solar_benefits import get_pv_solar_benefits
-from nachbarstrom.world import Location
+from nachbarstrom.inference.roof_provider import MockRoofProvider, TensorFlowRoofProvider
+from nachbarstrom.inference.file_updater import AsyncFileUpdater, GoogleStorageFileUpdater
+from nachbarstrom.inference.pv_solar_benefits import get_pv_solar_benefits
+
+from nachbarstrom.commons.image_provider import MockImageProvider, GoogleImageProvider
+from nachbarstrom.commons.world import Location
 
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument("--develop", help="Launches the app in developer mode.",
