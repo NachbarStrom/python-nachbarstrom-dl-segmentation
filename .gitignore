@@ -1,6 +1,7 @@
 # ML & models
 currentLocation.png
 model/
+logs
 
 # credentials
 cred/
