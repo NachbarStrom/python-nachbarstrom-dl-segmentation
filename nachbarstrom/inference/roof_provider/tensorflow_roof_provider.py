@@ -69,7 +69,7 @@ class TensorFlowRoofProvider(RoofProvider):
 
     def _get_image_of_location_as_pixel_array(
             self, location: Location) -> np.ndarray:
-        image = self._image_provider.image_from(location)
+        image = self._image_provider.get_image_from(location)
         image = image.resize(self._IMAGE_SIZE)
         pixel_array = np.array(image.convert("RGB"))
         return pixel_array[np.newaxis, :, :, :]

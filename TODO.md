@@ -1,6 +1,6 @@
 # Testing
 * AsyncModelUpdater
-* TensorFlowModel
+* TensorFlowRoofProvider, isolate TF from the rest of the logic.
 * GeoJsonAreaCalculator
 * pv_solar_benefits
 * test web_server by refactoring the parser into a function: 
