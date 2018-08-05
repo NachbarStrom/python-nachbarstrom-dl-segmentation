@@ -33,18 +33,24 @@ replace the command with 'env-prod/Scripts/activate'.
 ```commandline 
 source env-prod/bin/activate
 ```
-
-* Install the ``nachbarstrom-commons`` package. 
+* Set your environment variables, for example API keys.
 * Finally, you can start the server either in 'production' mode or in 
 'develop' mode.
-* For production:
+
+For production:
 ```commandline
-nohup sudo python3 -m nachbarstrom.inference.web_server.app >>logs 2>>logs &
+nohup sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app >>logs 2>>logs &
 ```
-* For development:
+* Here ``preserve-env`` is used to keep the environment variables when using ``sudo``.
+* We use ``-m`` to call the ``app.py `` as a module.
+* ``>>logs 2>>logs`` redirects all output to the ``logs`` file.
+* The ``&`` command detaches the process from the command line.
+
+For development:
 ````commandline
-sudo python3 -m nachbarstrom.inference.web_server.app --development
+sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app --development
 ````
+
 
 # Testing
 Make sure your Python environment is active.
