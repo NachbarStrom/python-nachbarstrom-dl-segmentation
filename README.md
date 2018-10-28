@@ -25,7 +25,7 @@ the-machine-address:~/tms-nachbarstrom-python/cred
 * Run the setup script for 'Ubuntu 16.04 LTS', or follow its steps, if you are
  on another platform.
 ````commandline
-bash ./setup_ubuntu16.sh
+bash ./setup_ubuntu.sh
 ````
 * Your new Python environment is located in the 'env-prod/' folder.
 * Activate your Python environment. If you are on Windows,
