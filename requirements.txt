@@ -1,0 +1,15 @@
+# production
+requests
+google-cloud-storage
+flask
+flask-cors
+lazy_import
+numpy
+tensorflow
+keras
+
+# Continuous integration
+pytest
+
+# NachbarStrom packages
+git+https://github.com/NachbarStrom/public-python-nachbarstrom-commons.git#egg=nachbarstrom_commons

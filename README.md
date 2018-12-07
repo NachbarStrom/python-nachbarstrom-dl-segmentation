@@ -25,7 +25,7 @@ the-machine-address:~/tms-nachbarstrom-python/cred
 * Run the setup script for 'Ubuntu 16.04 LTS', or follow its steps, if you are
  on another platform.
 ````commandline
-bash ./setup_ubuntu.sh
+bash install_environment.sh
 ````
 * Your new Python environment is located in the 'env-prod/' folder.
 * Activate your Python environment. If you are on Windows,
@@ -39,7 +39,7 @@ source env-prod/bin/activate
 
 For production:
 ```commandline
-nohup sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app >>logs 2>>logs &
+nohup sudo --preserve-env $(which python3) -m nachbarstrom.inference.web_server.app >>logs 2>>logs &
 ```
 * Here ``preserve-env`` is used to keep the environment variables when using ``sudo``.
 * We use ``-m`` to call the ``app.py `` as a module.
@@ -48,7 +48,7 @@ nohup sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app >>log
 
 For development:
 ````commandline
-sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app --development
+sudo --preserve-env $(which python3) -m nachbarstrom.inference.web_server.app --develop
 ````
 
 
@@ -56,11 +56,11 @@ sudo --preserve-env python3 -m nachbarstrom.inference.web_server.app --developme
 Make sure your Python environment is active.
 * Run unit tests. The option 'rs' stands for report skipped.
 ````commandline
-pytest -rs
+python -m pytest -rs
 ````
 * Integration tests: Usually launched on the 'develop', but not necessarily.
 ```commandline
-pytest -rs --integration
+python -m pytest -rs --integration
 ```
 
 # Stopping the server

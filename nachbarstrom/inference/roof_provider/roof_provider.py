@@ -22,7 +22,7 @@ class MockRoofProvider(RoofProvider):
 
     def get_roof(self, center_location: Location) -> Roof:
         self._validate_input(center_location)
-        roofs_information = Roof(RoofType.FLAT, RoofOrientation.SOUTH, 1.0)
+        roofs_information = Roof(RoofType.flat, RoofOrientation.South, 1.0)
         self._validate_response(roofs_information)
         return roofs_information
 
