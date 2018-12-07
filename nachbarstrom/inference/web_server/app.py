@@ -3,10 +3,12 @@ import json
 
 from flask import Flask, request
 from flask_cors import CORS
+from werkzeug.exceptions import BadRequest
 
 from nachbarstrom.inference.roof_provider import MockRoofProvider, TensorFlowRoofProvider
 from nachbarstrom.inference.file_updater import AsyncFileUpdater, GoogleStorageFileUpdater
-from nachbarstrom.inference.pv_solar_benefits import get_pv_solar_benefits
+from nachbarstrom.inference.pv_solar_benefits import \
+    get_pv_solar_benefits, GET_PV_SOLAR_BENEFITS_REQUIRED_PARAMS
 
 from nachbarstrom.commons.image_provider import MockImageProvider, GoogleImageProvider
 from nachbarstrom.commons.world import Location
@@ -46,8 +48,11 @@ def handle_roofs_information_request():
 @app.route('/pv-solar-benefits', methods=['POST'])
 def handle_pv_solar_benefits():
     roof_information = request.get_json()
+    missing_params = [p for p in GET_PV_SOLAR_BENEFITS_REQUIRED_PARAMS
+                      if p not in roof_information]
+    if len(missing_params) > 0:
+        raise BadRequest(description="Missing params: " + str(missing_params))
     solar_benefits = get_pv_solar_benefits(roof_information)
-    assert "data" in solar_benefits
     return json.dumps(solar_benefits)
 
 
@@ -56,6 +61,11 @@ def model_changed():
     ROOF_PROVIDER.update()
     return "This server acknowledges the model change and will update its " \
            "state."
+
+
+@app.errorhandler(BadRequest)
+def handle_missing_params(error: BadRequest):
+    return error.description, 400
 
 
 if __name__ == '__main__':

@@ -1,1 +1,1 @@
-from .pv_solar_benefits import get_pv_solar_benefits
+from .pv_solar_benefits import get_pv_solar_benefits, GET_PV_SOLAR_BENEFITS_REQUIRED_PARAMS
