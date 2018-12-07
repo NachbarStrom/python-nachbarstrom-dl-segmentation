@@ -4,7 +4,7 @@ import pytest
 def pytest_addoption(parser):
     parser.addoption("--integration", action="store_true",
                      default=False, help="run integration tests")
-    parser.addoption("--ip", action="store", default=False,
+    parser.addoption("--url", action="store", default=False,
                      help="Specify the ip of the server to run the integration "
                           "test against.")
 

@@ -8,5 +8,5 @@ sudo bash scripts/install_python36.sh
 python3.6 -m venv env-prod
 source env-prod/bin/activate
 
-sudo python -m pip install --upgrade setuptools
-sudo python -m pip install -r requirements.txt
+sudo $(which python) -m pip install --upgrade setuptools
+sudo $(which python) -m pip install -r requirements.txt

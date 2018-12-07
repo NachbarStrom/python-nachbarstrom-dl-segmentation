@@ -1,11 +1,11 @@
 import pytest as pytest
 import requests
-from .ip_fixture import ip_fixture
+from .ip_fixture import api_url
 
 
 @pytest.mark.integration
-def test_running_server_roof_classification(ip_fixture):
-    roof_properties_url = "http://{ip}/roof-properties".format(ip=ip_fixture)
+def test_running_server_roof_classification(api_url):
+    roof_properties_url = "{api_url}/roof-properties".format(api_url=api_url)
     data = {
         "data": [
             {"lat": 10.0, "lon": 2.0}
